@@ -13,27 +13,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Connection failed: " . $conn->connect_error);
     }
 
+    $post_id = $conn->real_escape_string($_POST['post_id']);
+
     $id_no = $conn->real_escape_string($_POST['id_no']);
     $organization = $conn->real_escape_string($_POST['organization']);
     $title = $conn->real_escape_string($_POST['title']);
     $content = $conn->real_escape_string($_POST['content']);
 
-    // Check for duplicate entry
     $check_sql = "SELECT * FROM user_activity 
-                  WHERE id_no = '$id_no' 
-                  AND organization = '$organization' 
-                  AND title = '$title' 
-                  AND content = '$content'";
+                  WHERE id_no = '$id_no'
+                  AND post_id = '$post_id'";
     $check_result = $conn->query($check_sql);
 
     if ($check_result->num_rows > 0) {
         echo "You have already joined this activity!";
     } else {
-        // Fetch student data
-        $student_sql = "SELECT name, department, year, course FROM student WHERE id_no='$id_no'";
+        $student_sql = "SELECT name, department, year, course 
+                        FROM student 
+                        WHERE id_no='$id_no'";
         $student_result = $conn->query($student_sql);
 
         if ($student_result->num_rows > 0) {
+
             $student = $student_result->fetch_assoc();
 
             $name = $conn->real_escape_string($student['name']);
@@ -41,15 +42,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $year = $conn->real_escape_string($student['year']);
             $course = $conn->real_escape_string($student['course']);
 
-            // Insert into user_activity
-            $insert_sql = "INSERT INTO user_activity (id_no, name, department, year, course, organization, title, content) 
-                           VALUES ('$id_no', '$name', '$department', '$year', '$course', '$organization', '$title', '$content')";
+            // INSERT with status = 'pending'
+            $insert_sql = "INSERT INTO user_activity 
+                           (id_no, post_id, name, department, year, course, organization, title, content, status)
+                           VALUES 
+                           ('$id_no', '$post_id', '$name', '$department', '$year', '$course', '$organization', '$title', '$content', 'pending')";
 
             if ($conn->query($insert_sql) === TRUE) {
-                echo "You have successfully joined the activity!";
+                echo "Your request has been submitted and is now pending approval.";
             } else {
                 echo "Error: " . $conn->error;
             }
+
         } else {
             echo "Student data not found!";
         }

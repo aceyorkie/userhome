@@ -1,0 +1,138 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.back-btn {
+    background: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.activities-container {
+    width: 100%;
+    max-width: 1210px;
+    margin-left: var(--side-nav-width);
+    margin-top: var(--top-nav-height);
+    padding: 24px;
+}
+
+.activity-card {
+    background: white;
+    padding: 18px 22px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.activity-title {
+    font-size: 20px;
+    margin: 0;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 30px;
+    font-size: 12px;
+    color: white;
+}
+
+.status-pending { background: #d4a017; }
+.status-approved { background: #2e8b57; }
+.status-declined { background: #c0392b; }
+
+.activity-org {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #333;
+}
+
+.activity-content {
+    display: flex;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.activity-img {
+    width: 130px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.activity-details p {
+    margin: 3px 0;
+    font-size: 14px;
+}
+
+.no-activities {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 18px;
+    color: #555;
+}
+
+@media (min-width: 769px) {
+    .nav-center {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 20px;
+    }
+
+    /* Logo centered on top */
+    .nav-left {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* Menu on second row */
+    .nav-center {
+        width: 100%;
+        justify-content: center;
+        gap: 22px;
+    }
+
+    .nav-center a {
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .activities-container {
+        margin-left: 0;
+        margin-top: 0;
+        padding-top: 120px;
+    }
+}
+
